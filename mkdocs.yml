@@ -1,0 +1,30 @@
+site_name: Maryland Inverse Design Benchmark Suite
+site_url: https://ideal.umd.edu/MIDBenchmarkSuite
+nav:
+    - User Guide:
+        - Overview: index.md
+        - Installation: installation.md
+        - Environments: environments.md
+        # - Inverse: inverse.md
+        # - Baseline Models: baselines.md
+        - Datasets: datasets.md
+        - Metrics: metrics.md
+    - Tutorials:
+        # - Tutorial List: tutorials.md
+        - Conditional GAN Models for 2D Airfoil Optimization: 'tutorials/airfoil-su2-singularity.md'
+        # - Graph Generative Models for DC-DC Power Converters: 'tutorials/gran.ipynb'
+        - 2D Heat Exchanger Optimization: 'tutorials/heat-fenics-docker.md'
+    - Environments:
+        - airfoil2d-su2: 'environments/airfoil2d-su2.md'
+        # - airfoil3d-su2: 'environments/airfoil3d-su2.md'
+        - heatsink2d-dolfin-adjoint: 'environments/heatsink2d-dolfin-adjoint.md'
+    - Development:
+        - 'Contributing New Environments': contributing-environments.md
+        # - 'Contributing New Baselines': contributing-baselines.md
+    # - Available Solvers:
+        # 'SU2 - Aerodynamics and Conjugate Heat Transfer': 'solvers/su2.md'
+        # 'ngSpice - Circuits': 'solvers/ngSpice.md'
+        # 'dolfin-adjoint - Multiphysics PDEs': 'solvers/dolfin-adjoint.md'
+        # 'MTO/OpenFOAM - CFD and Conjugate Heat Transfer': 'solvers/mto-openfoam.md'
+theme:
+  name: readthedocs
