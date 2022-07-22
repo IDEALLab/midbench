@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ideal.umd.edu/MIDBenchmarkSuite/metrics/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Metrics - Maryland Inverse Design Benchmark Suite</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Metrics";
+        var mkdocs_page_input_path = "metrics.md";
+        var mkdocs_page_url = "/MIDBenchmarkSuite/metrics/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Maryland Inverse Design Benchmark Suite
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/">Environments</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Metrics</a>
+    <ul class="current">
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/airfoil-su2-singularity/">Conditional GAN Models for 2D Airfoil Optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environments</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/airfoil2d-su2/">airfoil2d-su2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/heatsink2d-dolfin-adjoint/">heatsink2d-dolfin-adjoint</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Development</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../contributing-environments/">Contributing New Environments</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Maryland Inverse Design Benchmark Suite</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>User Guide &raquo;</li><li>Metrics</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="mid-benchmark-suite-metrics">MID Benchmark Suite -- Metrics</h2>
+<p>The metrics are functions for evaluating the performance of the inverse design models and the quality of the dataset. Because of the difference between their roles and their underlying mechanisms, they are divided into three different categories in MID.</p>
+<h1 id="internal-distribution-metrics">Internal Distribution Metrics</h1>
+<p>This set of metrics could evaluate the performance of inverse design model purely using the existing dataset by relying on statistics, without running the MIDBench environments to do time-consuming simulation or optimization.</p>
+<pre><code class="language-python">def midbench.metrics.maximum_mean_discrepancy(gen_func: Function, X_test: Ndarray)
+</code></pre>
+<p>For evaluating the maximum mean discrepancy between the inverse design generator distribution and the dataset empirical distribution.</p>
+<ul>
+<li>Parameters<ul>
+<li>gen_func (Function): The generator function which produces certain amount of samples when called.</li>
+<li>X_test (Ndarray): The dataset in the form of numpy array.</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>The score.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def midbench.metrics.consistency(gen_func, latent_dim, bounds)
+</code></pre>
+<p>For evaluating the latent space consistency of the generator function inside the given latent space.</p>
+<ul>
+<li>Parameters<ul>
+<li>gen_func (Function): The generator function which produces certain amount of samples when called.</li>
+<li>latent_dim (int): The dataset in the form of numpy array.</li>
+<li>bounds (list)</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>The score.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def midbench.metrics.rsmth(gen_func, X_test, N=2000)
+</code></pre>
+<p>For evaluating the generator function's relative variance of difference against the dataset.</p>
+<ul>
+<li>Parameters<ul>
+<li>gen_func (Function): The generator function which produces certain amount of samples when called.</li>
+<li>X_test (Ndarray): The dataset in the form of numpy array.</li>
+<li>N (int): The number of samples to be generated for the evaluation.</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>The score.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def midbench.metrics.rdiv(gen_func, X_train, d=None, k=None, bounds=None)
+</code></pre>
+<p>For evaluating the generator function's relative diversity against the dataset.</p>
+<ul>
+<li>Parameters<ul>
+<li>gen_func (Function): The generator function which produces certain amount of samples when called.</li>
+<li>X_test (Ndarray): The dataset in the form of numpy array.</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>The score.</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-python">def midbench.metrics.mean_log_likelihood(gen_func, X_test, N=2000)
+</code></pre>
+<p>This metric first fits the generator's samples with a kernel density estimation function, then take the dataset's log likelihood on this KDE model as the score.</p>
+<ul>
+<li>Parameters<ul>
+<li>gen_func (Function): The generator function which produces certain amount of samples when called.</li>
+<li>X_test (Ndarray): The dataset in the form of numpy array.</li>
+<li>N (int): The number of samples to be generated for the evaluation.</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>The score.</li>
+</ul>
+</li>
+</ul>
+<h1 id="external-performance-metrics">External Performance Metrics</h1>
+<p>This set of metrics directly evaluates the quality of inverse design model with the MIDBench environment by computing quantities like the Cumulative Optimality Gap and the Instantaneous Optimality Gap. These are currently not yet implemented in the public library but we will update here when these are available.</p>
+<h1 id="dataset-metrics">Dataset Metrics</h1>
+<p>This set of metrics for evaluating the quality of the dataset or generated samples, such as the diversity of it. Can be used for <code>Database</code> curation.</p>
+<h1 id="utils">Utils</h1>
+<pre><code class="language-python">def confidence_interval(metric: Function) → Function
+</code></pre>
+<p>A decorator function for turning any non-deterministic metric into one evaluating the confidence interval instead.</p>
+<ul>
+<li>Parameters<ul>
+<li>metric (<code>Function</code>): A metric function with certain input.</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>ci_metric (<code>Function</code>): A function that accepts an additional <code>ci_n</code> as the first positional argument for the number of sampling batches. The subsequent input arguments are the same as <code>metric</code>'s.</li>
+</ul>
+</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../datasets/" class="btn btn-neutral float-left" title="Datasets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../tutorials/airfoil-su2-singularity/" class="btn btn-neutral float-right" title="Conditional GAN Models for 2D Airfoil Optimization">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../datasets/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../tutorials/airfoil-su2-singularity/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

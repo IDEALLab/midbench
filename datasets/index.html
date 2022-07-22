@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ideal.umd.edu/MIDBenchmarkSuite/datasets/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Datasets - Maryland Inverse Design Benchmark Suite</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Datasets";
+        var mkdocs_page_input_path = "datasets.md";
+        var mkdocs_page_url = "/MIDBenchmarkSuite/datasets/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Maryland Inverse Design Benchmark Suite
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/">Environments</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Datasets</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/airfoil-su2-singularity/">Conditional GAN Models for 2D Airfoil Optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environments</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/airfoil2d-su2/">airfoil2d-su2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/heatsink2d-dolfin-adjoint/">heatsink2d-dolfin-adjoint</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Development</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../contributing-environments/">Contributing New Environments</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Maryland Inverse Design Benchmark Suite</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>User Guide &raquo;</li><li>Datasets</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="mid-benchmark-suite-datasets">MID Benchmark Suite -- Datasets</h2>
+<p>One major component of the Maryland Inverse Design Benchmark Suite is the availability of datasets needed to train the various Inverse Design models. This page describes our general approach for how we construct these datasets and provides links to the various environments where datasets are located. In general, each environment will possess one or more datasets that was generated specific to that environment, though it is certainly possible to use datasets generated for one environment one another environment or ID task.</p>
+<h1 id="dataset-management">Dataset Management</h1>
+<p>The $(\bm{d}, \bm{b}, \bm{p})$---design, condition, performance---tuples generated by the environments are handled by the following two classes---<code>DataEntry</code> and <code>DataBase</code>. DataBase can be used to produce the required dataset object for inverse design learning.</p>
+<h2 id="dataentry">DataEntry</h2>
+<pre><code class="language-python">class midbench.data.DataEntry(designs: Design, conditions: Condition, performances: Performance, specs: Union[SimSpec, OptSpec, str, NoneType]=None)
+</code></pre>
+<p>This is an iterable object for storing and processing the $(\bm{d,b,p})$ tuple that user received during a single simulation or optimization process. It is the output of the <code>Env.simulate()</code> and <code>Env.optimize()</code> method. It is built for easy indexing and slicing across all the three elements. </p>
+<p>It can be subclassed to get environment specific DataBase.</p>
+<ul>
+<li>
+<p>Parameters</p>
+<ul>
+<li>designs (Design): The designs.</li>
+<li>conditions (Condition): The boundary conditions.</li>
+<li>performances (Performance): The corresponding performances.</li>
+<li>specs (Union[SimSpec, OptSpec, str, NoneType]): The specifications of the operation by which this data is obtained. This is for experiment replicability. Can also be filled with text or just left empty.</li>
+</ul>
+</li>
+<li>
+<p>Methods</p>
+<ul>
+<li>
+<p>_is_compatible(designs: Design, conditions: Condition, performances: Performance) → Bool</p>
+<p>This checks if the size of the first dimension of the designs, conditions and performances are compatible when a new <code>DataEntry</code> instance is to be created. 
+      - Paramaters
+- designs (Design): The designs.
+- conditions (Condition): The boundary conditions.
+- performances (Performance): The corresponding performances.
+      - Returns
+- True or False
+    - convert(design_specs: DesignSpec, c_units: Union[list, tuple, str], p_units: Union[list, tuple, str]) → DataEntry</p>
+</li>
+</ul>
+<p>This is for generating a new data entry of the given formats.
+  - Paramaters
+    - design_specs (DesignSpec): The specifications of the design space to which the current design variables are to be converted.
+    - c_units (Union[list, tuple, str]): The boundary condition units sent to the convert method.
+    - p_units (Union[list, tuple, str]): The performance units sent to the convert method.
+  - Returns
+    - A new <code>DataEntry</code> instance of the given formats.
+- ...maybe some statistics and plotting methods.
+- __getitem__(idx) → DataEntry
+- __iter__()
+- __next__() → DataEntry
+- Attributes
+- designs (Design)
+- conditions (Conditions)
+- performances (Performances)</p>
+</li>
+</ul>
+<h2 id="database">DataBase</h2>
+<pre><code class="language-python">class midbench.data.DataBase(*entries: DataEntry)
+</code></pre>
+<p>Database is a list-like mutable object for managing all the data entries that users collected over time, and producing unified dataset for inverse design training tasks. It should also provide necessary methods for curating, e.g., ones that can remove duplicate entries or produce dataset of certain diversity.</p>
+<p>It can be subclassed to get environment specific DataBase.</p>
+<ul>
+<li>
+<p>Methods</p>
+<ul>
+<li>
+<p>generate_dataset(design_specs: DesignSpec, c_units: Union[list, tuple, str], p_units: Union[list, tuple, str], p_query: Tensor) → Dataset:</p>
+<p>Generate the PyTorch dataset tensor of given format and size for inverse design training.</p>
+<ul>
+<li>Parameters<ul>
+<li>design_specs (DesignSpec): The specifications of the design space to which the current design variables are to be converted.</li>
+<li>c_units (Union[list, tuple, str]): The boundary condition units sent to the convert method.</li>
+<li>p_units (Union[list, tuple, str]): The performance units sent to the convert method.</li>
+<li>p_query (Tensor): Only data entries of matched p_query can be selected to compose new dataset, as we don't need NaN. </li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>A Pytorch or TensorFlow Dataset instance.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>append(entry: DataEntry) → None:</p>
+<ul>
+<li>Parameters:<ul>
+<li>entry (DataEntry) - The data entry to be merged into the database.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>diversify()</p>
+</li>
+<li>view(class) </li>
+</ul>
+</li>
+</ul>
+<h1 id="dataset-compatibility">Dataset Compatibility</h1>
+<p>Even if <code>DataEntry</code> and <code>DataBase</code> might be environment specific through subclassing, different pairs of these two classes may still be compatible with each other as long as they have the same parent class. After all, what really matters here is the value of the dbp tuple. We provide a <code>view()</code> method similar to the one in NumPy to enable easy migration between different DataEntry and DataBase classes. </p>
+<h1 id="available-dataset">Available Dataset</h1>
+<p>SU2 Airfoil 2D</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../environments/" class="btn btn-neutral float-left" title="Environments"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../metrics/" class="btn btn-neutral float-right" title="Metrics">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../environments/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../metrics/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ideal.umd.edu/MIDBenchmarkSuite/installation/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Installation - Maryland Inverse Design Benchmark Suite</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation";
+        var mkdocs_page_input_path = "installation.md";
+        var mkdocs_page_url = "/MIDBenchmarkSuite/installation/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Maryland Inverse Design Benchmark Suite
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Installation</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/">Environments</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/airfoil-su2-singularity/">Conditional GAN Models for 2D Airfoil Optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environments</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/airfoil2d-su2/">airfoil2d-su2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../environments/heatsink2d-dolfin-adjoint/">heatsink2d-dolfin-adjoint</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Development</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../contributing-environments/">Contributing New Environments</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Maryland Inverse Design Benchmark Suite</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>User Guide &raquo;</li><li>Installation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <p>Installing the full MID Benchmark Suite has three main parts:</p>
+<ol>
+<li>Installing the MID Benchmark Suite core library -- this handles common functions across the entire suite, such as the main classes, computing common ID metrics, etc.</li>
+<li>Downloading any datasets or pre-trained models that you desire. These are existing curated datasets that we have used in past publications and that are compatible with the MID Benchmark Suite. We do not download these by default, though there are opens in both the install and when using the API to download these when needed.</li>
+<li>Installing the individual simulation environments -- these are only needed if you wish to run more advanced metrics that require actually evaluating a given engineering solver.</li>
+</ol>
+<p>You can run certain models and metrics using only the core MID library, however for most meaningful benchmarks you will need to access to at least one simulation environment.</p>
+<h1 id="installing-the-core-mid-benchmark-suite-library">Installing the core MID Benchmark Suite Library</h1>
+<p>For the baseline library, you can install this with <code>pip</code> via:</p>
+<pre><code class="language-bash">pip install midbench
+</code></pre>
+<h1 id="download-id-datasets-and-pre-trained-baseline-models">Download ID Datasets and Pre-trained Baseline Models</h1>
+<h1 id="installing-simulation-and-optimization-containers">Installing Simulation and Optimization Containers</h1>
+<h2 id="singularity-container">Singularity Container</h2>
+<p>Singularity is a container platform. It allows you to create and run containers that package up pieces of software in a way that is portable and reproducible. You can build a container using Singularity on your laptop, and then run it on many of the largest HPC clusters in the world, local university or company clusters, a single server, in the cloud, or on a workstation down the hall. Your container is a single file, and you don’t have to worry about how to install all the software you need on each different operating system.</p>
+<p>Singularity was created to run complex applications on HPC clusters in a simple, portable, and reproducible way. First developed at Lawrence Berkeley National Laboratory, it quickly became popular at other HPC sites, academic sites, and beyond. Singularity is an open-source project, with a friendly community of developers and users. The user base continues to expand, with Singularity now used across industry and academia in many areas of work.</p>
+<p>Many container platforms are available, but Singularity is focused on:</p>
+<ul>
+<li>
+<p>Verifiable reproducibility and security, using cryptographic signatures, an immutable container image format, and in-memory decryption.</p>
+</li>
+<li>
+<p>Integration over isolation by default. Easily make use of GPUs, high speed networks, parallel filesystems on a cluster or server by default.</p>
+</li>
+<li>
+<p>Mobility of compute. The single file SIF container format is easy to transport and share.</p>
+</li>
+<li>
+<p>A simple, effective security model. You are the same user inside a container as outside, and cannot gain additional privilege on the host system by default. Read more about Security in Singularity.</p>
+</li>
+</ul>
+<p><em>For more information about Singularity Container, please check the <a href="https://sylabs.io/guides/3.6/user-guide/introduction.html">official website</a>.</em></p>
+<h3 id="installing-singularity">Installing Singularity</h3>
+<p>You will need a <strong>Linux</strong> system to run Singularity natively. Options for using Singularity on Mac and Windows machines, along with alternate Linux installation options are discussed <a href="https://docs.sylabs.io/guides/3.5/admin-guide/installation.html#installation-on-windows-or-mac">here</a>.</p>
+<h4 id="install-system-dependencies">Install System Dependencies</h4>
+<p>You must first install development libraries to your host.</p>
+<pre><code class="language-bash">$ sudo apt-get update &amp;&amp; sudo apt-get install -y \
+    build-essential \
+    libssl-dev \
+    uuid-dev \
+    libgpgme11-dev \
+    squashfs-tools \
+    libseccomp-dev \
+    wget \
+    pkg-config \
+    git \
+    cryptsetup
+</code></pre>
+<h4 id="three-steps-to-install-singularity">Three steps to install Singularity:</h4>
+<ol>
+<li>
+<p><a href="https://go.dev/doc/install">Installing GO (Linux)</a></p>
+</li>
+<li>
+<p>Downloading Singularity</p>
+</li>
+<li>
+<p>Compiling Singularity Source Code</p>
+</li>
+</ol>
+<h5 id="download-singularity-from-a-release">Download Singularity from a release</h5>
+<p>You can download Singularity from one of the releases. To see a full list, visit the <a href="https://github.com/sylabs/singularity/releases">GitHub release page</a>. After deciding on a release to install, you can run the following commands to proceed with the installation.</p>
+<pre><code class="language-bash">$ export VERSION=3.5.3 &amp;&amp; # adjust this as necessary \
+    wget https://github.com/singularityware/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz &amp;&amp; \
+    tar -xzf singularity-${VERSION}.tar.gz &amp;&amp; \
+    cd singularity
+</code></pre>
+<p>For our MID Benchmark Suite, the Singularity version 3.5.3 is used to build our Singularity containers for different environments. Users should be able to run the Singularity containers with the same version or higher.</p>
+<h5 id="compile-the-singularity-source-code">Compile the Singularity source code</h5>
+<p>Now you are ready to build Singularity. You can build Singularity using the following commands:</p>
+<pre><code class="language-bash">$ ./mconfig &amp;&amp; \
+    make -C builddir &amp;&amp; \
+    sudo make -C builddir install
+</code></pre>
+<p>Singularity must be installed as root to function properly. You can verify you've installed Singularity by typing the following command:</p>
+<pre><code class="language-bash">$ singularity version
+</code></pre>
+<p>Confirm that the command prints the installed version of Singularity.</p>
+<p>We use Singularity containers for many of our different environments. An example of using SU2 Singularity container for 2D airfoil simulation and optimization can be found in one of our tutorials about the <a href="../tutorials/airfoil-su2-singularity/">2D airfoil inverse design</a>.</p>
+<!--
+### Usage
+
+<!-- The [Quick Start](https://sylabs.io/guides/3.6/user-guide/quick_start.html) guide on the official webpage provide clear and detailed installation steps. Users should be able to install Singularity successfully by just following the guide step by step. For our MID Benchmark Suite, the Singularity version 3.5.3 is used to build our Singularity containers for different environments. Users should be able to run the Singularity containers with the same version or higher.
+
+#### SU2 Singularity Container
+
+We perform the 2D airfoil simulation and optimization using [SU2](https://su2code.github.io/) CFD solver. For user's easy usage, we have pre-built the SU2 suite using a [singularity container](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html) with the required environments set up. The ready-to-use SU2 singularity container can be pulled or downloaded from https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh.
+
+* **Install Singularity**. If you already have singularity installed on your device, please ignore this step. If not, please follow this 3-step quick installation guide above to install Singularity first. Our MID Benchmark Suite uses Singularity version 3.5.3. You should be able to run the SIF container with the same version or higher.
+
+* **Download SU2 SIF container**. Please download the SU2 SIF container from Sylabs using this link (https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh). After installing Singularity, you can also pull the SU2 SIF container using the following command: `$ singularity pull --arch amd64 library://junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh:sha256.c6bf72230e360d23e2acdc8fc5cf9b8d26a3b709cc0c96feaaba42b60a611158`   
+
+* **To run the MIDBench API code**:
+    1. **Linux Users:** If you are using Linux (e.g., Ubuntu) or Linux VM box), please do the following steps:
+        * Enter SU2 SIF container by typing the following command in your terminal: `singularity shell /path/to/your/downloaded/su2v7.3.1_conda3.9.12_gmsh.sif`
+        * Open jupyter notebook or jupyter lab by typing command in your terminal: `jupyter lab` or `jupyter-notebook`.
+        * Download our **_"MIDBenchmarkSuite.zip_**" from https://github.com/IDEALLab/MIDBenchmarkSuite or `git clone https://github.com/IDEALLab/MIDBenchmarkSuite.git`. In the MIDBenchmarkSuite directory, there is an iPython notebook **_“midbench_api.ipynb”_**. Please open the notebook in jupyter lab or jupyter notebook.
+        * Please run the API demo code in the notebook cell by cell to check out the **_2D Airfoil Simulation and Optimization_** demos in your SU2 SIF container.
+
+    2. **Windows Users:** If you are using Windows system and not interested in installing the Linux system or subsystem, you can directly use [Google Colab](https://colab.research.google.com/) to implement our MIDBench API demos by following the detailed installation and implementation steps below:
+
+* **Install System Dependencies:**
+
+<pre><code class="language-bash">!sudo apt-get update &amp;&amp; sudo apt-get install -y \
+    build-essential \
+    libssl-dev \
+    uuid-dev \
+    libgpgme11-dev \
+    squashfs-tools \
+    libseccomp-dev \
+    wget \
+    pkg-config \
+    git \
+    cryptsetup
+</code></pre>
+
+
+* **Install Go:**
+
+<pre><code class="language-bash">%%bash
+wget https://go.dev/dl/go1.18.4.linux-amd64.tar.gz &amp;&amp; \
+sudo rm -rf /usr/local/go &amp;&amp; tar -C /usr/local -xzf go1.18.4.linux-amd64.tar.gz
+</code></pre>
+
+
+* **Download Singularity:**
+
+<pre><code class="language-bash">%%bash
+export VERSION=3.5.3 &amp;&amp; # adjust this as necessary \
+  wget https://github.com/singularityware/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz &amp;&amp; \
+  tar -xzf singularity-${VERSION}.tar.gz &amp;&amp; \
+  cd singularity
+</code></pre>
+
+
+* **Compiling Singularity Source Code:**
+
+<pre><code class="language-bash">%%shell
+export PATH=$PATH:/usr/local/go/bin &amp;&amp; \
+source /etc/profile &amp;&amp; \
+go version &amp;&amp; \
+cd singularity &amp;&amp; \
+./mconfig &amp;&amp; \
+    make -C builddir &amp;&amp; \
+    sudo make -C builddir install
+</code></pre>
+
+
+* **Verify Singularity Installation:**
+
+<pre><code class="language-bash">!singularity version
+</code></pre>
+
+
+* **Pull SU2 SIF Container:**
+
+<pre><code class="language-bash">!singularity pull --arch amd64 library://junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh:sha256.c6bf72230e360d23e2acdc8fc5cf9b8d26a3b709cc0c96feaaba42b60a611158
+</code></pre>
+
+
+* **Download and Unzip "MIDBenchmarkSuite.zip":**
+
+<pre><code class="language-bash">!unzip MIDBenchmarkSuite.zip
+</code></pre>
+
+
+* **Execute the Python Script using SIF Container (recommended):**
+
+
+<pre><code class="language-bash"># Simulation
+%%bash
+cd MIDBenchmarkSuite/
+singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_sha256.c6bf72230e360d23e2acdc8fc5cf9b8d26a3b709cc0c96feaaba42b60a611158.sif bash -c &quot;python airfoil2d_simu.py&quot;
+</code></pre>
+
+
+
+<pre><code class="language-bash"># Optimization
+%%bash
+cd MIDBenchmarkSuite/
+singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_sha256.c6bf72230e360d23e2acdc8fc5cf9b8d26a3b709cc0c96feaaba42b60a611158.sif bash -c &quot;python airfoil2d_opt.py&quot;
+</code></pre>
+
+
+* **Alternatively, You can Spawn a New Shell within SIF Container:**
+
+<pre><code class="language-bash">singularity shell --userns su2v7.3.1_conda3.9.12_gmsh_sha256.c6bf72230e360d23e2acdc8fc5cf9b8d26a3b709cc0c96feaaba42b60a611158.sif
+</code></pre>
+
+
+After entering SU2 SIF container, please run the 2D airfoil simulation and optimization demos using the following commands:
+
+Go to the path of directory **"MIDBenchmarkSuite"** by entering command `cd /Path/to/MIDBenchmarkSuite`. Then, type `python`. In the Python environment, please enter the following commands to run demos:
+
+<pre><code class="language-python">from midbench.envs import make
+Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
+
+# Simulation
+designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy').meshgen()
+conditions = Condition(**{'mach':0.7,'reynolds':7000000,'lift':0.350})
+performances = ['lift', 'drag']
+
+lift, drag = Env.simulate(conditions, designs, performances, './midbench/envs/airfoil/results_simu')
+
+# Optimization
+designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy')
+conditions = Condition(**{'mach':0.6,'reynolds':8000000,'lift':0.320})
+objectives = ['drag', 'ld_ratio']
+
+drag, ld_ratio = Env.optimize(conditions, designs, objectives, './midbench/envs/airfoil/results_opt')
+</code></pre>
+
+
+__**NOTE**:__ The singuarity container also includes a 2D airfoil mesh generator `AirfoilGeometryConverter`. The generator will first convert the 2D coordinates of the airfoil curve points into mesh. The SU2 solver then takes the mesh for the follwoing CFD simulation and shape optimization. -->
+
+<h2 id="docker-container">Docker Container</h2>
+<p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p>
+<p>Docker provides the ability to package and run an application in a loosely isolated environment called a container. The isolation and security allows you to run many containers simultaneously on a given host. Containers are lightweight and contain everything needed to run the application, so you do not need to rely on what is currently installed on the host. You can easily share containers while you work, and be sure that everyone you share with gets the same container that works in the same way.</p>
+<p>Docker provides tooling and a platform to manage the lifecycle of your containers:</p>
+<ul>
+<li>Develop your application and its supporting components using containers.</li>
+<li>The container becomes the unit for distributing and testing your application.</li>
+<li>When you’re ready, deploy your application into your production environment, as a container or an orchestrated service. This works the same whether your production environment is a local data center, a cloud provider, or a hybrid of the two.</li>
+</ul>
+<p><em>For more information about Docker, please check the <a href="https://docs.docker.com/get-started/overview/">official website</a>.</em></p>
+<h3 id="installing-docker">Installing Docker</h3>
+<ul>
+<li><strong>Linux Users:</strong> Please use the following commands to install Docker:</li>
+</ul>
+<pre><code class="language-bash">$ sudo apt-get remove docker docker-engine docker.io &amp;&amp; \
+    apt-get update &amp;&amp; \
+    apt install docker.io
+</code></pre>
+<ul>
+<li><strong>Windows and Mac Users:</strong> Mac and Windows users should install the <a href="https://www.docker.com/products/docker-desktop/">Docker Toolbox</a> (this is a simple one-click install). <strong><em>If running on Mac or Windows, make sure you run the following commands inside the Docker Quickstart Terminal.</em></strong></li>
+</ul>
+<!-- ### Usage
+
+#### dolfin-adjoint with FEniCS Docker
+
+##### To Run the MIDBench API Code:
+
+* **Download and Unzip "MIDBenchmarkSuite.zip":**
+
+<pre><code class="language-bash">!unzip MIDBenchmarkSuite.zip
+</code></pre>
+
+
+* **Create a session that has access to the current folder from the host:**
+
+* **Linux Users:**
+
+
+<pre><code class="language-bash">$ cd /path/to/MIDBenchmarkSuite
+$ sudo docker run -it -p 8887:8887 -v $(pwd):/home/fenics/shared quay.io/dolfinadjoint/pyadjoint
+</code></pre>
+
+
+* **Windows and Mac Users:** If running on Mac or Windows, make sure you run the above commands inside the Docker Quickstart Terminal.
+
+
+* **Install System Dependencies:**
+
+
+<pre><code class="language-bash">$ sudo pip install dataclasses &amp;&amp; \
+    pip install typing_extensions &amp;&amp; \
+</code></pre>
+
+Reinstall `importlib-metadata`:
+
+
+<pre><code class="language-bash">$ sudo pip uninstall importlib-metadata &amp;&amp; \
+    pip install importlib-metadata
+</code></pre>
+
+
+* **Open jupyter notebook or jupyter lab:**
+
+<pre><code class="language-bash">$ jupyter lab --no-browser --ip=0.0.0.0 --port=8887
+</code></pre>
+
+
+
+* **Run MIDBench 2D Heat Exchanger Optimization Demo:** In the MIDBenchmarkSuite directory, there is an iPython notebook “midbench_api.ipynb”. Please open the notebook in jupyter lab or jupyter notebook. Please run the API demo code in the notebook cell by cell to check out the **_2D Heat Exchanger Optimization_** demo in your dolfin-adjoint FEniCS Docker container. The commands in the jupyter notebook are as follows:
+
+```python
+# Optimization
+from midbench.envs import make
+Env, Design, Condition = make("HeatExchanger2d-v0")
+
+conditions = Condition(**{'volume':0.4,'length':0.5,'resolution':50})
+designs = Design(**{'volume':0.4,'resolution':50}).output()
+objectives = ['compliance']
+
+compliance=Env.optimize(condition, designs, objectives)
+``` -->
+
+<p>We use Docker container for our 2D heat exchanger optimization environment. Please find the usage of the dolfin-adjoint Docker in this <a href="../tutorials/heat-fenics-docker/">tutorial</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../environments/" class="btn btn-neutral float-right" title="Environments">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../environments/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

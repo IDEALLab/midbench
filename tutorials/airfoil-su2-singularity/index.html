@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ideal.umd.edu/MIDBenchmarkSuite/tutorials/airfoil-su2-singularity/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Conditional GAN Models for 2D Airfoil Optimization - Maryland Inverse Design Benchmark Suite</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Conditional GAN Models for 2D Airfoil Optimization";
+        var mkdocs_page_input_path = "tutorials\\airfoil-su2-singularity.md";
+        var mkdocs_page_url = "/MIDBenchmarkSuite/tutorials/airfoil-su2-singularity/";
+      </script>
+    
+    <script src="../../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> Maryland Inverse Design Benchmark Suite
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../..">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../environments/">Environments</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../datasets/">Datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../metrics/">Metrics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Conditional GAN Models for 2D Airfoil Optimization</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#su2-singularity-container">SU2 Singularity Container</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environments</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../environments/airfoil2d-su2/">airfoil2d-su2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../environments/heatsink2d-dolfin-adjoint/">heatsink2d-dolfin-adjoint</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Development</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../contributing-environments/">Contributing New Environments</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">Maryland Inverse Design Benchmark Suite</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Tutorials &raquo;</li><li>Conditional GAN Models for 2D Airfoil Optimization</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h3 id="usage">Usage</h3>
+<!-- The [Quick Start](https://sylabs.io/guides/3.6/user-guide/quick_start.html) guide on the official webpage provide clear and detailed installation steps. Users should be able to install Singularity successfully by just following the guide step by step. For our MID Benchmark Suite, the Singularity version 3.5.3 is used to build our Singularity containers for different environments. Users should be able to run the Singularity containers with the same version or higher. -->
+
+<h4 id="su2-singularity-container">SU2 Singularity Container</h4>
+<p>We perform the 2D airfoil simulation and optimization using <a href="https://su2code.github.io/">SU2</a> CFD solver. For user's easy usage, we have pre-built the SU2 suite using a <a href="https://docs.sylabs.io/guides/3.5/user-guide/introduction.html">singularity container</a> with the required environments set up. The ready-to-use SU2 singularity container can be pulled or downloaded from <a href="https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh">https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh</a>.</p>
+<ul>
+<li>
+<p><strong>To run the MIDBench API code</strong>:</p>
+<ol>
+<li>
+<p><strong>Linux Users:</strong> If you are using Linux (e.g., Ubuntu) or Linux VM box), please do the following steps:</p>
+<ul>
+<li>Install Singularity. If you already have singularity installed on your device, please ignore this step. If not, please follow the <a href="../../installation/">3-step quick installation guide</a> to install Singularity first. Our MID Benchmark Suite uses Singularity version 3.5.3. You should be able to run the SIF container with the same version or higher.</li>
+<li>Download SU2 SIF container. Please download the SU2 SIF container from Sylabs using this link (<a href="https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh">https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh</a>). After installing Singularity, you can also pull the SU2 SIF container using the following command: <code>$ singularity pull --arch amd64 library://junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh:latest</code></li>
+<li>Enter SU2 SIF container by typing the following command in your terminal: <code>singularity shell /path/to/your/downloaded/su2v7.3.1_conda3.9.12_gmsh_latest.sif</code></li>
+<li>Open jupyter notebook or jupyter lab by typing command in your terminal: <code>jupyter lab</code> or <code>jupyter-notebook</code>.</li>
+<li>Download our <strong><em>"MIDBenchmarkSuite.zip</em></strong>" from https://github.com/IDEALLab/MIDBenchmarkSuite or <code>git clone https://github.com/IDEALLab/MIDBenchmarkSuite.git</code>. In the tutorial directory, there is an iPython notebook <a href="../example_usage.ipynb"><strong>"example_usage.ipynb"</strong></a>. Please open the notebook in jupyter lab or jupyter notebook.</li>
+<li>Please run the API demo code in the notebook cell by cell to check out the <strong><em>2D Airfoil Simulation and Optimization</em></strong> demos in your SU2 SIF container.</li>
+</ul>
+</li>
+<li>
+<p><strong>Windows Users:</strong> If you are using Windows system and not interested in installing the Linux system or subsystem, you can directly implement our MIDBench API demos in <a href="https://colab.research.google.com/">Google Colab Notebook</a> by following the installation and implementation steps below (we also include an iPython notebook <a href="../singularity_SU2.ipynb"><strong><em>"singularity_SU2.ipynb"</em></strong></a> for Windows users to use directly in Colab):</p>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Install Singularity:</strong> Please follow the <a href="../../installation/">3-step quick installation guide</a> to install Singularity.</p>
+</li>
+</ul>
+<!-- * **Install System Dependencies:**
+
+<pre><code class="language-bash">!sudo apt-get update &amp;&amp; sudo apt-get install -y \
+    build-essential \
+    libssl-dev \
+    uuid-dev \
+    libgpgme11-dev \
+    squashfs-tools \
+    libseccomp-dev \
+    wget \
+    pkg-config \
+    git \
+    cryptsetup
+</code></pre>
+
+
+* **Install Go:**
+
+<pre><code class="language-bash">%%bash
+wget https://go.dev/dl/go1.18.4.linux-amd64.tar.gz &amp;&amp; \
+sudo rm -rf /usr/local/go &amp;&amp; tar -C /usr/local -xzf go1.18.4.linux-amd64.tar.gz
+</code></pre>
+
+
+* **Download Singularity:**
+
+<pre><code class="language-bash">%%bash
+export VERSION=3.5.3 &amp;&amp; # adjust this as necessary \
+  wget https://github.com/singularityware/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz &amp;&amp; \
+  tar -xzf singularity-${VERSION}.tar.gz &amp;&amp; \
+  cd singularity
+</code></pre>
+
+
+* **Compiling Singularity Source Code:**
+
+<pre><code class="language-bash">%%shell
+export PATH=$PATH:/usr/local/go/bin &amp;&amp; \
+source /etc/profile &amp;&amp; \
+go version &amp;&amp; \
+cd singularity &amp;&amp; \
+./mconfig &amp;&amp; \
+    make -C builddir &amp;&amp; \
+    sudo make -C builddir install
+</code></pre>
+
+
+* **Verify Singularity Installation:**
+
+<pre><code class="language-bash">!singularity version
+</code></pre>
+
+ -->
+<ul>
+<li><strong>Pull SU2 SIF Container:</strong></li>
+</ul>
+<pre><code class="language-bash">!singularity pull --arch amd64 library://junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh:latest
+</code></pre>
+<ul>
+<li><strong>Make sure you have installed midbench:</strong></li>
+</ul>
+<pre><code class="language-bash">pip install midbench
+</code></pre>
+<ul>
+<li><strong>Create and Execute Python Scripts using SIF Container (recommended):</strong></li>
+</ul>
+<pre><code># Simulation
+%%writefile MIDBenchmarkSuite/airfoil2d_simu.py
+from midbench.envs import make
+Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
+
+designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy').meshgen()
+conditions = Condition(**{'mach':0.7,'reynolds':7000000,'lift':0.350})
+performances = ['lift', 'drag']
+
+lift, drag = Env.simulate(conditions, designs, performances, './midbench/envs/airfoil/results_simu')
+print(lift, drag)
+</code></pre>
+<pre><code class="language-bash"># Simulation
+%%bash
+cd MIDBenchmarkSuite/
+singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c &quot;python airfoil2d_simu.py&quot;
+</code></pre>
+<pre><code># Optimization
+%%writefile MIDBenchmarkSuite/airfoil2d_opt.py
+from midbench.envs import make
+Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
+
+designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy')
+conditions = Condition(**{'mach':0.6,'reynolds':8000000,'lift':0.320})
+objectives = ['drag', 'ld_ratio', 'airfoil_opt']
+
+drag, ld_ratio, airfoil_opt = Env.optimize(conditions, designs, objectives, './midbench/envs/airfoil/results_opt')
+print(drag, ld_ratio, airfoil_opt)
+</code></pre>
+<pre><code class="language-bash"># Optimization
+%%bash
+cd MIDBenchmarkSuite/
+singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c &quot;python airfoil2d_opt.py&quot;
+</code></pre>
+<ul>
+<li><strong>Alternatively, You can Spawn a New Shell within SIF Container:</strong></li>
+</ul>
+<pre><code class="language-bash">singularity shell --userns su2v7.3.1_conda3.9.12_gmsh_latest.sif
+</code></pre>
+<p>After entering SU2 SIF container, please run the 2D airfoil simulation and optimization demos using the following commands:</p>
+<p>Go to the path of directory <strong>"MIDBenchmarkSuite"</strong> by entering command <code>cd /Path/to/MIDBenchmarkSuite</code>. Then, type <code>python</code>. In the Python environment, please enter the following commands to run demos:</p>
+<pre><code class="language-python">from midbench.envs import make
+Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
+
+# Simulation
+designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy').meshgen()
+conditions = Condition(**{'mach':0.7,'reynolds':7000000,'lift':0.350})
+performances = ['lift', 'drag']
+
+lift, drag = Env.simulate(conditions, designs, performances, './midbench/envs/airfoil/results_simu')
+
+# Optimization
+designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy')
+conditions = Condition(**{'mach':0.6,'reynolds':8000000,'lift':0.320})
+objectives = ['drag', 'ld_ratio', 'airfoil_opt']
+
+drag, ld_ratio, airfoil_opt = Env.optimize(conditions, designs, objectives, './midbench/envs/airfoil/results_opt')
+print(drag, ld_ratio, airfoil_opt)
+</code></pre>
+<p><strong><strong>NOTE</strong>:</strong> The singuarity container also includes a 2D airfoil mesh generator <code>AirfoilGeometryConverter</code>. The generator will first convert the 2D coordinates of the airfoil curve points into mesh. The SU2 solver then takes the mesh for the follwoing CFD simulation and shape optimization.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../metrics/" class="btn btn-neutral float-left" title="Metrics"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../heat-fenics-docker/" class="btn btn-neutral float-right" title="2D Heat Exchanger Optimization">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../metrics/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../heat-fenics-docker/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '../..';</script>
+    <script src="../../js/theme_extra.js" defer></script>
+    <script src="../../js/theme.js" defer></script>
+      <script src="../../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

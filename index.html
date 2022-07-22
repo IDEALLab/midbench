@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ideal.umd.edu/MIDBenchmarkSuite/" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>Overview - Maryland Inverse Design Benchmark Suite</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Overview";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = "/MIDBenchmarkSuite/";
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> Maryland Inverse Design Benchmark Suite
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href=".">Overview</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="environments/">Environments</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="datasets/">Datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="metrics/">Metrics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/airfoil-su2-singularity/">Conditional GAN Models for 2D Airfoil Optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="tutorials/heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environments</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="environments/airfoil2d-su2/">airfoil2d-su2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="environments/heatsink2d-dolfin-adjoint/">heatsink2d-dolfin-adjoint</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Development</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="contributing-environments/">Contributing New Environments</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">Maryland Inverse Design Benchmark Suite</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>User Guide &raquo;</li><li>Overview</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="the-maryland-inverse-design-benchmark-suite">The Maryland Inverse Design Benchmark Suite</h1>
+<p>The <strong>Maryland Inverse Design (MID) Benchmark Suite</strong> is a set of libraries for running computational experiments on Machine Learning models for <em>Inverse Design</em> across a wide variety of domains and metrics. Its goal is to facilitate reproducible research in this area and help broaden the applicability of various ID algorithms across many applications by making it easy to run otherwise complex engineering design simulations using a common interface specification. It also provides a set of metrics that are relevant to different aspects of ID performance commonly used in research papers. In this way, if a researcher designs a new kind of ID algorithm, they will be able to use this repository to run a large set of tests across common examples of increasing range and complexity.</p>
+<p>You can read more about the library at <a href="https://ideal.umd.edu/midbench">its documentation website</a>.</p>
+<h1 id="contents">Contents</h1>
+<p>Specifically, this repository contains the following:
+- A set of Engineering Design Environments (see <code>env</code> folder) that provides containerized simulation environments in which researchers can run their ID algorithm across a variety of multi-physics simulation and optimization platforms. These will implement a range of applications from Aerodynamic Optimization to Power Electronics to Medical Devices to Photonics to Heat Transfer, among others as we develop and deploy those environments. Currently available environments are in the <code>env</code> folder.
+- Code that links to/downloads a set of pre-built datasets generated from the above environments that you can use for training your Inverse Design algorithm. These are helpful if you just wish to train an Inverse Design model directly from an existing dataset without needing to run any simulation or design optimization code (which is typical time consuming). While you will not be able to calculate certain ID metrics without using the containerized environments mentioned above, there are certain metrics that you can compute using only the dataset, making this is a useful and lower-cost starting point for many researchers.
+- A set of Python files for computing a common set of ID performance metrics (<code>metrics.py</code>). These include simpler metrics like those that measure closeness of distribution to test data, along with more complex metrics that require access to a design environment or simulator, such as Instantaneous Optimality Gap and Cumulative Optimality Gap which is useful for judging how well ID warm starts existing optimization routines.</p>
+<h1 id="installation">Installation</h1>
+<pre><code class="language-bash">pip install midbench
+</code></pre>
+<p>However, to use specific design environments will require installing either Singularity or Docker and using our pre-build images defined within that environment's singularity container file (<em>i.e.</em>, the <code>.sif</code> file). These are described further in the documentation pages. Certain environments may require some additional installation steps -- we are working to simplify these, but in the meantime each environments subpage will provide some more details on environment specific installation.</p>
+<h1 id="usage">Usage</h1>
+<p>Using the benchmark suite has essentially three steps, some of which may be optional depending on how you prefer to use the library:
+1. (Optional) Load an existing ID dataset and train an ID model on that dataset. Alternatively, you can load a pre-trained model.
+2. Specify a set of input conditions over which you wish to generate predictions/designs and then generate sample designs for those inputs. These typically include requirements for the design that the ID outputs should satisfy.
+3. Analyze how well the generated designs do us with respect to various ID metrics, such as MMD, Instantaneous Optimality Gap and Cumulative Optimality Gap.</p>
+<p>An example usage case is provided in the <code>tutorials\</code> folder.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="installation/" class="btn btn-neutral float-right" title="Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="installation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

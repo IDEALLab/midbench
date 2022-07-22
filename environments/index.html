@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://ideal.umd.edu/MIDBenchmarkSuite/environments/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Environments - Maryland Inverse Design Benchmark Suite</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Environments";
+        var mkdocs_page_input_path = "environments.md";
+        var mkdocs_page_url = "/MIDBenchmarkSuite/environments/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> Maryland Inverse Design Benchmark Suite
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">User Guide</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Environments</a>
+    <ul class="current">
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../datasets/">Datasets</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../metrics/">Metrics</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/airfoil-su2-singularity/">Conditional GAN Models for 2D Airfoil Optimization</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../tutorials/heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Environments</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="airfoil2d-su2/">airfoil2d-su2</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="heatsink2d-dolfin-adjoint/">heatsink2d-dolfin-adjoint</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Development</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../contributing-environments/">Contributing New Environments</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">Maryland Inverse Design Benchmark Suite</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>User Guide &raquo;</li><li>Environments</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="mid-benchmark-suite-environments">MID Benchmark Suite -- Environments</h2>
+<p>The environments in MIDBench serve as the <em>interface</em> between Python and the simulation &amp; optimization (S&amp;O) programs---be it a script running locally, or one running inside a Docker or Singularity container. Specifically, it should either perform simulation by taking the design variables and boundary conditions as input then yielding the performance metrics as requested, or perform optimization over the initial design variables by optimizing the performance metrics under the given boundary conditions. Since each S&amp;O program is not necessarily written in Python, the design variables and boundary conditions need to be first transformed into a format readable to the program, and the resulting output of the program needs to be transformed back into Python variables. </p>
+<p>In short, the MIDBench Environments are for generating the $(\bm{d}, \bm{b}, \bm{p})$---design, condition, performance---tuples for inverse design learning.</p>
+<h1 id="basic-components">Basic Components</h1>
+<p>The MIDBench environments should complete their jobs with the following environment-specific Python classes---<code>Env</code>, <code>Design</code>, <code>Condition</code>, <code>Performance</code>---as components for easy management:</p>
+<h2 id="env">Env</h2>
+<pre><code class="language-python">class midbench.core.Env(specs: EnvSpec = None)
+</code></pre>
+<p>The parent class of the simulation/optimization environment, which serves as the interface between Python and the simulation/optimization program. In other words, it takes Python variables as inputs and outputs the results also in form of Python variables, while keeping the processing and running of the program under the hood. </p>
+<ul>
+<li>
+<p>Parameters:</p>
+<ul>
+<li>specs (<code>EnvSpec</code>): The specifications for the initialization of the S&amp;O program.</li>
+</ul>
+</li>
+<li>
+<p>Methods</p>
+<p>As its role suggests, <code>Env</code> should have either a "simulate" method, or a "optimize" method. Both are for generating the $(\bm{d}, \bm{b}, \bm{p})$ tuples for inverse design learning, but with different motivations. </p>
+<ul>
+<li>
+<p>simulate(designs: Design, conditions: Condition, performances: Performance, specs: SimSpec) → DataEntry:</p>
+<p><em>Motivation: Design &amp; Condition → Performance</em>
+- Parameters
+    - designs (<code>Design</code>) - An $N\times D$ tensor-liked object defining the design space and storing the set of design variables $\bm{d}$.
+    - conditions (<code>Condition</code>) - An $N\times B$ or $1\times B$ tensor-liked object storing the set of boundary conditions $\bm{b}$. If the first dimension is of size $1$, it will be propagated to all $N$ designs.
+    - performances (<code>Performance</code>) - An $N\times P$ or $1\times P$ tensor-liked object storing the set of performances. It should be empty, with only the ID of the performances to be evaluated specified. If the first dimension is of size $1$, it will be propagated to all $N$ designs.
+    - specs (<code>SimSpec</code>) - The specifications for running the simulation. Should be a <code>Dict</code>-like object.
+- Returns
+    - The <code>DataEntry</code> data logger storing the $(\bm{d}, \bm{b}, \bm{p})$ tuples, with the <code>SimSpec</code> instance included for simulation replicability.
+    - optimize(designs: Design, conditions: Condition, performances: Performance, specs: OptSpec) → DataEntry:</p>
+<p><em>Motivation: Performance &amp; Condition → Design</em>
+- Parameters
+    - designs (<code>Design</code>) - An $N\times D$ tensor-liked object defining the design space and storing the set of <em>initial</em> design variables $\bm{d}$.
+    - conditions (<code>Condition</code>) - An $N\times B$ or $1\times B$ tensor-liked object storing the set of boundary conditions $\bm{b}$ under which the optimization is performed. If the first dimension is of size $1$, it will be propagated to all $N$ designs.
+    - performances (<code>Performance</code>) - An $N\times P$ or $1\times P$ tensor-liked object storing the set of performances to be optimized. It should be empty, with only the ID of the performances to be evaluated specified. If the first dimension is of size $1$, it will be propagated to all $N$ designs.
+    - specs (<code>OptSpec</code>): The specifications for running the optimization, including things like the number of iterations, tolerances, etc. Should be a <code>Dict</code>-like object.
+- Returns
+    - The <code>DataEntry</code> data entry storing the $(\bm{d}^\star, \bm{b}, \bm{p}^\star)$ tuples for either the optimization final result or the entire optimization history, with the <code>OptSpec</code> instance included for optimization replicability.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Attributes:</p>
+<ul>
+<li>dbp (tuple): The tuple (Design, Condition, Performance) of classes dedicated to handling the data for this specific environment.</li>
+</ul>
+</li>
+</ul>
+<h2 id="design">Design</h2>
+<pre><code class="language-python">class midbench.core.Design(data: array_like, specs: DesignSpec=None, dtype=None, **kwargs)
+</code></pre>
+<p>An ndarray subclass serving as the container and manager for the design variables $\bm{d}$ of a list of designs. We can develop environment-specific Designs by inheriting and overloading. </p>
+<ul>
+<li>
+<p>Arguments</p>
+<ul>
+<li>data (<code>array_like</code>): The tensor of design variables or the directory of the design files.</li>
+<li>specs (<code>DesignSpec</code>): A <code>dict</code>-like object containing the specifications of the current design variable space. For instance, the specifications of the control point spaces of Bezier curve or B-spline.</li>
+<li>dtype (<code>data-type, optional</code>): dtype for ndarray.</li>
+<li>kwargs: Optional keyword arguments used as key-value pairs to update the specifications in the <code>specs</code> attribute. Cannot be any key other than the existing keys in <code>specs</code>.</li>
+</ul>
+</li>
+<li>
+<p>Methods</p>
+<ul>
+<li>
+<p>convert(specs: DesignSpec) → Design:</p>
+<p>Convert the current design variables into a different design variable space.</p>
+<ul>
+<li>Parameters<ul>
+<li>specs (<code>DesignSpec</code>): The specification of the target design variable space.</li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>A new <code>Design</code> in the target design space.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>output(specs: MeshSpec) → Mesh:</p>
+<p>Generate mesh file readable to the S&amp;O program.</p>
+<ul>
+<li>Parameters<ul>
+<li>specs (<code>MeshSpec</code>): The specifications of the mesh. </li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>A mesh file (or its directory) that is readable to the environment.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Attributes</p>
+<ul>
+<li>specs (<code>DesignSpec</code>): The specifications of the current design space. </li>
+<li>Env (<code>Type</code>): The <code>Env</code> class that this <code>Design</code> class is built for.</li>
+<li>Spec(<code>Type</code>): The <code>DesignSpec</code> class dedicated to this <code>Design</code> class. A mandatory attribute in the definition of <code>Design</code> subclass.</li>
+</ul>
+</li>
+</ul>
+<h2 id="condition">Condition</h2>
+<pre><code class="language-python">class midbench.core.Condition(data: array_like, specs: ConditionSpec=None, dtype=None, **kwargs)
+</code></pre>
+<p>The container and manager for boundary conditions. This is the parent class of every other env-specific Condition. </p>
+<ul>
+<li>
+<p>Arguments</p>
+<ul>
+<li>data (<code>array_like</code>): The values of the boundary conditions.</li>
+<li>specs (<code>ConditionSpec</code>): An <code>OrderedDict</code>-like object containing the names and units of the values, and also specifying their order. Can be ignored if we only use the default metric system. </li>
+<li>dtype (<code>data-type, optional</code>): dtype for ndarray.</li>
+<li>kwargs: Optional keyword arguments used as key-value pairs to update the specifications in the <code>specs</code> attribute. Cannot be any key other than the existing keys in <code>specs</code>.</li>
+</ul>
+</li>
+<li>
+<p>Methods</p>
+<ul>
+<li>
+<p>output():</p>
+<p>Transform it to the format that the S&amp;O program can read. </p>
+<ul>
+<li>Returns</li>
+<li>The file or string that the S&amp;O program can read.</li>
+</ul>
+</li>
+<li>
+<p>convert(specs: ConditionSpec) → Condition:</p>
+<ul>
+<li>Parameters<ul>
+<li>specs (<code>ConditionSpec</code>): The metric system to be converted to. </li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>New <code>Condition</code> instance with the given units.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>__repr__() → str:</p>
+</li>
+<li>The string representation of the conditions for <code>print()</code>, should be one showing both the values and the corresponding units.</li>
+</ul>
+</li>
+<li>
+<p>Attributes</p>
+<ul>
+<li>specs (<code>ConditionSpec</code>): The specifications of the current design space. </li>
+<li>Env (<code>Type</code>): The <code>Env</code> class that this <code>Condition</code> class is built for.</li>
+<li>Spec(<code>Type</code>): The <code>ConditionSpec</code> class dedicated to this <code>Condition</code> class. A mandatory attribute in the definition of <code>Condition</code> subclass.</li>
+<li>names (<code>tuple</code>): The names of the boundary conditions, which determines the order of the values.</li>
+<li>units (<code>tuple</code>): The units of the boundary conditions.</li>
+</ul>
+</li>
+</ul>
+<h2 id="performance">Performance</h2>
+<pre><code class="language-python">class midbench.core.Performance(data: array_like, specs: PerformanceSpec=None, dtype=None, **kwargs)
+</code></pre>
+<p>The container and manager for performances. This is the parent class of every other env-specific Performance. </p>
+<p>It may do two jobs:</p>
+<ol>
+<li>Storing the performance data produced by <code>simulate()</code> and <code>optimize()</code>. Empty values will be filled with <code>NaN</code>.</li>
+<li>
+<p>Indicating the performances to be simulated or optimized (may need to add an additional attribute to <code>PerformanceSpec</code>).</p>
+</li>
+<li>
+<p>Arguments</p>
+<ul>
+<li>data (<code>array_like</code>): The values of the performances.</li>
+<li>specs (<code>PerformanceSpec</code>): The units of the values. Can be ignored if we only use the default metric system.</li>
+<li>dtype (<code>data-type, optional</code>): dtype for ndarray.</li>
+<li>kwargs: Optional keyword arguments used as key-value pairs to update the specifications in the <code>specs</code> attribute. Cannot be any key other than the existing keys in <code>specs</code>.</li>
+</ul>
+</li>
+<li>
+<p>Methods</p>
+<ul>
+<li>
+<p>output(): </p>
+<p>Transform it to the format that the S&amp;O program can read. </p>
+<ul>
+<li>Returns</li>
+<li>The file or string that the S&amp;O program can read.</li>
+</ul>
+</li>
+<li>
+<p>convert(specs: PerformanceSpec) → Performance:</p>
+<ul>
+<li>Parameters<ul>
+<li>specs (<code>PerformanceSpec</code>): The units to be converted to. </li>
+</ul>
+</li>
+<li>Returns<ul>
+<li>New <code>Performance</code> instance with the given units.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>__repr__() → str:</p>
+<p>The string representation of the performances for <code>print()</code>, should be one showing both the values and the corresponding units.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Attributes</p>
+<ul>
+<li>specs (<code>PerformanceSpec</code>): The specifications of the current design space. </li>
+<li>Env (<code>Type</code>): The <code>Env</code> class that this <code>Performance</code> class is built for.</li>
+<li>Spec(<code>Type</code>): The <code>PerformanceSpec</code> class dedicated to this <code>Performance</code> class. A mandatory attribute in the definition of <code>Performance</code> subclass.</li>
+<li>names (<code>tuple</code>): The names of the performances, which determines the order of the values.</li>
+<li>units (<code>tuple</code>): The units of the performances.</li>
+</ul>
+</li>
+</ol>
+<h1 id="specifications">Specifications</h1>
+<p>There might be a tremendous amount of specifications related to each environment components above. To efficiently manage them, enhance the tracability of simulations and optimizations, and improve the compatibility between different subclasses of the environment components, we use the instances of <code>_Spec</code> and <code>_OrderedSpec</code> to record, process and migrate all these specifications. </p>
+<p><code>_Spec</code> and <code>_OrderedSpec</code> are <code>dict</code>-like and <code>OrderedDict</code>-like objects, respectively. Their main difference to dictionaries---which is also the reason for the introduction of them---is that they have default keys and values, and their keys are immutable, which makes good sense for specifications. In addition, the specifications is also the defining characteristic of each subclass of the environment components, so it is a necessary attribute of each subclass and it is mandatory to specify it in the definition of each subclass. </p>
+<h2 id="_spec">_Spec</h2>
+<p>This class is for storing the specifications whose order does not matter. For instance, the <code>DesignSpec</code> of <code>Design</code> stores the specifications about the design variable space like the number of control points of the Bezier curve, and we do not care about their order. </p>
+<h3 id="subclasses">Subclasses</h3>
+<p><code>DesignSpec</code>, <code>SimSpec</code>, <code>OptSpec</code>, <code>EnvSpec</code>, <code>MeshSpec</code>...</p>
+<h2 id="_orderedspec">_OrderedSpec</h2>
+<p>This is a subclass of <code>_Spec</code> for storing specifications whose order matters. For instance, for <code>Condition</code> and <code>Performance</code>, if we want to specify the unit of each dimension of these arrays, we had better also keep this info in a fixed order to remind us of the meaning of each dimension.</p>
+<h3 id="subclasses_1">Subclasses</h3>
+<p><code>ConditionSpec</code>, <code>PerformanceSpec</code>...</p>
+<h2 id="compatibility">Compatibility</h2>
+<p>There are two ways to create a new <code>_Spec</code> instance, one is to specify explicity what the value of each key is, another is to take an existing <code>_Spec</code> instance as input and copy its values. The latter comes with a problem that two specifications might not have the same set of keys, so that a brainless copy between them is confusing for the fact that the keys of <code>_Spec</code> are fixed. However, this is to our benefit, as every <code>Design</code>, <code>Condition</code> and <code>Performance</code> subclass has a dedicated immutable <code>_Spec</code> which is part of its identity, and we can use this to determine which two subclasses are compatible. </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../installation/" class="btn btn-neutral float-left" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../datasets/" class="btn btn-neutral float-right" title="Datasets">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../installation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../datasets/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
