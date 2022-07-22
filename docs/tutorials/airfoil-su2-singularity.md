@@ -19,7 +19,7 @@ We perform the 2D airfoil simulation and optimization using [SU2](https://su2cod
         * Download SU2 SIF container. Please download the SU2 SIF container from Sylabs using this link ([https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh](https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh)). After installing Singularity, you can also pull the SU2 SIF container using the following command: `$ singularity pull --arch amd64 library://junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh:latest`
         * Enter SU2 SIF container by typing the following command in your terminal: `singularity shell /path/to/your/downloaded/su2v7.3.1_conda3.9.12_gmsh_latest.sif`
         * Open jupyter notebook or jupyter lab by typing command in your terminal: `jupyter lab` or `jupyter-notebook`.
-        * Download our **_"MIDBenchmarkSuite.zip_**" from https://github.com/IDEALLab/MIDBenchmarkSuite or `git clone https://github.com/IDEALLab/MIDBenchmarkSuite.git`. In the tutorial directory, there is an iPython notebook [**"example_usage.ipynb"**](../tutorials/example_usage.ipynb). Please open the notebook in jupyter lab or jupyter notebook.
+        * In the tutorial directory, there is an iPython notebook [**"example_usage.ipynb"**](../tutorials/example_usage.ipynb). Please open the notebook in jupyter lab or jupyter notebook.
         * Please run the API demo code in the notebook cell by cell to check out the **_2D Airfoil Simulation and Optimization_** demos in your SU2 SIF container.
 
     2. **Windows Users:** If you are using Windows system and not interested in installing the Linux system or subsystem, you can directly implement our MIDBench API demos in [Google Colab Notebook](https://colab.research.google.com/) by following the installation and implementation steps below (we also include an iPython notebook [**_"singularity_SU2.ipynb"_**](../tutorials/singularity_SU2.ipynb) for Windows users to use directly in Colab):
@@ -135,7 +135,7 @@ singularity shell --userns su2v7.3.1_conda3.9.12_gmsh_latest.sif
 
 After entering SU2 SIF container, please run the 2D airfoil simulation and optimization demos using the following commands:
 
-Go to the path of directory **"MIDBenchmarkSuite"** by entering command `cd /Path/to/MIDBenchmarkSuite`. Then, type `python`. In the Python environment, please enter the following commands to run demos:
+Type `python`. In the Python environment, please enter the following commands to run demos:
 ```python
 from midbench.envs import make
 Env, Design, Condition = make("Airfoil2d-v0")
