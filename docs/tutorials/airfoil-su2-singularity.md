@@ -1,8 +1,15 @@
 ### Usage
 
+#### SU2 Installation
+Users who are interested in the open-source [SU2](https://su2code.github.io/) CFD solver can install the SU2 suite directly on you devices by following the intallation guide on SU2 official website.
+
+* **Linux and Mac Users:** Please find the installation steps [here](https://su2code.github.io/docs_v7/SU2-Linux-MacOS/) to install SU2 and enable SU2 python library.
+
+* **Windows Users:** Please install SU2 and enable SU2 python library using the steps shown [here](https://su2code.github.io/docs_v7/SU2-Windows/).
+
 <!-- The [Quick Start](https://sylabs.io/guides/3.6/user-guide/quick_start.html) guide on the official webpage provide clear and detailed installation steps. Users should be able to install Singularity successfully by just following the guide step by step. For our MID Benchmark Suite, the Singularity version 3.5.3 is used to build our Singularity containers for different environments. Users should be able to run the Singularity containers with the same version or higher. -->
 
-#### SU2 Singularity Container
+#### SU2 Singularity Container (Recommended)
 
 We perform the 2D airfoil simulation and optimization using [SU2](https://su2code.github.io/) CFD solver. For user's easy usage, we have pre-built the SU2 suite using a [singularity container](https://docs.sylabs.io/guides/3.5/user-guide/introduction.html) with the required environments set up. The ready-to-use SU2 singularity container can be pulled or downloaded from [https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh](https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh).
 
