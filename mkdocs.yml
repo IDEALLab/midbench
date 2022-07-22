@@ -13,7 +13,7 @@ nav:
         # - Tutorial List: tutorials.md
         - Conditional GAN Models for 2D Airfoil Optimization: 'tutorials/airfoil-su2-singularity.md'
         # - Graph Generative Models for DC-DC Power Converters: 'tutorials/gran.ipynb'
-        - 2D Heat Exchanger Optimization: 'tutorials/heat-fenics-docker.md'
+        - 2D Heat Conduction Optimization: 'tutorials/heat-fenics-docker.md'
     - Environments:
         - airfoil2d-su2: 'environments/airfoil2d-su2.md'
         # - airfoil3d-su2: 'environments/airfoil3d-su2.md'
