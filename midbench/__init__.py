@@ -1,2 +1,2 @@
-from midbench.core import Env, Design, Condition
-from midbench import envs, utils
+from .core import Env, Design, Condition
+from . import envs, utils
