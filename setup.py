@@ -25,7 +25,7 @@ setup(
   author = 'The Information for Design, Engineering, And Learning Laboratory',
   author_email = 'fuge@umd.edu',
   url = 'https://github.com/IDEALLab/midbench',
-  download_url = 'https://github.com/IDEALLab/midbench/archive/v0.1-alpha.tar.gz',
+  download_url = 'https://github.com/IDEALLab/midbench/archive/v0.1.tar.gz',
   install_requires=[
           'numpy',
           'torch',
