@@ -16,12 +16,13 @@ with open("README.md") as fh:
 
 setup(
   name = 'midbench',
-  packages = ['midbench'],
+  packages = ['midbench', 'midbench.envs', 'midbench.utils', 'midbench.envs.airfoil','midbench.envs.heatconduction'],
   version = '0.1',
   license='MIT',
   description = "The Maryland Inverse Design (MID) Benchmark Suite",
   long_description = long_description,
   long_description_content_type="text/markdown",
+  include_package_data=True,
   author = 'The Information for Design, Engineering, And Learning Laboratory',
   author_email = 'fuge@umd.edu',
   url = 'https://github.com/IDEALLab/midbench',

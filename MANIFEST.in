@@ -1,0 +1,2 @@
+include midbench/envs/airfoil/*.cfg
+include midbench/envs/airfoil/*.npy
