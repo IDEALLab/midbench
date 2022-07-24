@@ -16,7 +16,7 @@ with open("README.md") as fh:
 
 setup(
   name = 'midbench',
-  packages = ['midbench', 'midbench.envs', 'midbench.utils', 'midbench.envs.airfoil','midbench.envs.heatconduction'],
+  packages = ['midbench', 'midbench.envs', 'midbench.envs.airfoil','midbench.envs.heatconduction'],
   version = '0.1',
   license='MIT',
   description = "The Maryland Inverse Design (MID) Benchmark Suite",
