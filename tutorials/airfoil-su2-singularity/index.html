@@ -57,11 +57,13 @@
               <ul class="current">
                   <li class="toctree-l1 current"><a class="reference internal current" href="./">Conditional GAN Models for 2D Airfoil Optimization</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#su2-singularity-container">SU2 Singularity Container</a>
+    <li class="toctree-l2"><a class="reference internal" href="#su2-installation">SU2 Installation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#su2-singularity-container-recommended">SU2 Singularity Container (Recommended)</a>
     </li>
     </ul>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../heat-fenics-docker/">2D Heat Exchanger Optimization</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../heat-fenics-docker/">2D Heat Conduction Optimization</a>
                   </li>
               </ul>
               <p class="caption"><span class="caption-text">Environments</span></p>
@@ -101,9 +103,19 @@
             <div class="section" itemprop="articleBody">
               
                 <h3 id="usage">Usage</h3>
+<h4 id="su2-installation">SU2 Installation</h4>
+<p>Users who are interested in the open-source <a href="https://su2code.github.io/">SU2</a> CFD solver can install the SU2 suite directly on you devices by following the intallation guide on SU2 official website.</p>
+<ul>
+<li>
+<p><strong>Linux and Mac Users:</strong> Please find the installation steps <a href="https://su2code.github.io/docs_v7/SU2-Linux-MacOS/">here</a> to install SU2 and enable SU2 python library.</p>
+</li>
+<li>
+<p><strong>Windows Users:</strong> Please install SU2 and enable SU2 python library using the steps shown <a href="https://su2code.github.io/docs_v7/SU2-Windows/">here</a>.</p>
+</li>
+</ul>
 <!-- The [Quick Start](https://sylabs.io/guides/3.6/user-guide/quick_start.html) guide on the official webpage provide clear and detailed installation steps. Users should be able to install Singularity successfully by just following the guide step by step. For our MID Benchmark Suite, the Singularity version 3.5.3 is used to build our Singularity containers for different environments. Users should be able to run the Singularity containers with the same version or higher. -->
 
-<h4 id="su2-singularity-container">SU2 Singularity Container</h4>
+<h4 id="su2-singularity-container-recommended">SU2 Singularity Container (Recommended)</h4>
 <p>We perform the 2D airfoil simulation and optimization using <a href="https://su2code.github.io/">SU2</a> CFD solver. For user's easy usage, we have pre-built the SU2 suite using a <a href="https://docs.sylabs.io/guides/3.5/user-guide/introduction.html">singularity container</a> with the required environments set up. The ready-to-use SU2 singularity container can be pulled or downloaded from <a href="https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh">https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh</a>.</p>
 <ul>
 <li>
@@ -116,7 +128,7 @@
 <li>Download SU2 SIF container. Please download the SU2 SIF container from Sylabs using this link (<a href="https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh">https://cloud.sylabs.io/library/junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh</a>). After installing Singularity, you can also pull the SU2 SIF container using the following command: <code>$ singularity pull --arch amd64 library://junideallab/midbench/su2v7.3.1_conda3.9.12_gmsh:latest</code></li>
 <li>Enter SU2 SIF container by typing the following command in your terminal: <code>singularity shell /path/to/your/downloaded/su2v7.3.1_conda3.9.12_gmsh_latest.sif</code></li>
 <li>Open jupyter notebook or jupyter lab by typing command in your terminal: <code>jupyter lab</code> or <code>jupyter-notebook</code>.</li>
-<li>Download our <strong><em>"MIDBenchmarkSuite.zip</em></strong>" from https://github.com/IDEALLab/MIDBenchmarkSuite or <code>git clone https://github.com/IDEALLab/MIDBenchmarkSuite.git</code>. In the tutorial directory, there is an iPython notebook <a href="../example_usage.ipynb"><strong>"example_usage.ipynb"</strong></a>. Please open the notebook in jupyter lab or jupyter notebook.</li>
+<li>In the tutorial directory, there is an iPython notebook <a href="../example_usage.ipynb"><strong>"example_usage.ipynb"</strong></a>. Please open the notebook in jupyter lab or jupyter notebook.</li>
 <li>Please run the API demo code in the notebook cell by cell to check out the <strong><em>2D Airfoil Simulation and Optimization</em></strong> demos in your SU2 SIF container.</li>
 </ul>
 </li>
@@ -235,7 +247,7 @@ singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c &quot
 <pre><code class="language-bash">singularity shell --userns su2v7.3.1_conda3.9.12_gmsh_latest.sif
 </code></pre>
 <p>After entering SU2 SIF container, please run the 2D airfoil simulation and optimization demos using the following commands:</p>
-<p>Go to the path of directory <strong>"MIDBenchmarkSuite"</strong> by entering command <code>cd /Path/to/MIDBenchmarkSuite</code>. Then, type <code>python</code>. In the Python environment, please enter the following commands to run demos:</p>
+<p>Type <code>python</code>. In the Python environment, please enter the following commands to run demos:</p>
 <pre><code class="language-python">from midbench.envs import make
 Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
 
@@ -260,7 +272,7 @@ print(drag, ld_ratio, airfoil_opt)
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../../metrics/" class="btn btn-neutral float-left" title="Metrics"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../heat-fenics-docker/" class="btn btn-neutral float-right" title="2D Heat Exchanger Optimization">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../heat-fenics-docker/" class="btn btn-neutral float-right" title="2D Heat Conduction Optimization">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
