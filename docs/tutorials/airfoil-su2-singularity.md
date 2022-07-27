@@ -93,7 +93,7 @@ pip install midbench
 
 ```
 # Simulation
-%%writefile MIDBenchmarkSuite/airfoil2d_simu.py
+%%writefile midbench/airfoil2d_simu.py
 from midbench.envs import make
 Env, Design, Condition = make("Airfoil2d-v0")
 
@@ -108,13 +108,13 @@ print(lift, drag)
 ```bash
 # Simulation
 %%bash
-cd MIDBenchmarkSuite/
+cd midbench/
 singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c "python airfoil2d_simu.py"
 ```
 
 ```
 # Optimization
-%%writefile MIDBenchmarkSuite/airfoil2d_opt.py
+%%writefile midbench/airfoil2d_opt.py
 from midbench.envs import make
 Env, Design, Condition = make("Airfoil2d-v0")
 
@@ -129,7 +129,7 @@ print(drag, ld_ratio, airfoil_opt)
 ```bash
 # Optimization
 %%bash
-cd MIDBenchmarkSuite/
+cd midbench/
 singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c "python airfoil2d_opt.py"
 ```
 
