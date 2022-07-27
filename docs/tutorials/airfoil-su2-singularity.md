@@ -89,6 +89,11 @@ cd singularity && \
 pip install midbench
 ```
 
+* **Clone midbench repo or download midbench repo:**
+```bash
+git clone https://github.com/IDEALLab/midbench.git
+```
+
 * **Create and Execute Python Scripts using SIF Container (recommended):**
 
 ```
