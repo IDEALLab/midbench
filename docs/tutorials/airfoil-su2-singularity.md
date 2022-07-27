@@ -7,8 +7,8 @@ Users who are interested in the open-source [SU2](https://su2code.github.io/) CF
 
     1. **Download source code:** Please first download the source code from the [SU2 download webpage](https://su2code.github.io/download.html).
     2. **Create a configuration using the `meson.py`:** `./meson.py build -Denable-autodiff=true`.
-    3. **Setting environment variables:** There will be an instruction showing up in the terminal window for setting environment variables after creating the configuration. Users can copy and paste the paths to the ~/.bashrc and `source ~/.bashrc`. If you miss the instruction, please follow this [link](https://su2code.github.io/docs_v7/SU2-Linux-MacOS/) to set up the environment variables.
-    4. **
+    3. **Set environment variables:** There will be an instruction showing up in the terminal window for setting environment variables after creating the configuration. Users can copy and paste the paths to the ~/.bashrc and `source ~/.bashrc`. If you miss the instruction, please follow this [link](https://su2code.github.io/docs_v7/SU2-Linux-MacOS/) to set up the environment variables.
+    4. **Compile and install SU2:** `./ninja -C build install`.
 
 * **Windows Users:** Please install SU2 and enable SU2 python library using the steps shown [here](https://su2code.github.io/docs_v7/SU2-Windows/).
 
