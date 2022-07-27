@@ -107,7 +107,13 @@
 <p>Users who are interested in the open-source <a href="https://su2code.github.io/">SU2</a> CFD solver can install the SU2 suite directly on you devices by following the intallation guide on SU2 official website.</p>
 <ul>
 <li>
-<p><strong>Linux and Mac Users:</strong> Please find the installation steps <a href="https://su2code.github.io/docs_v7/SU2-Linux-MacOS/">here</a> to install SU2 and enable SU2 python library.</p>
+<p><strong>Linux and Mac Users:</strong> Please find the installation steps <a href="https://su2code.github.io/docs_v7/Build-SU2-Linux-MacOS/">here</a> to install SU2 and enable SU2 python library:</p>
+<ol>
+<li><strong>Download source code:</strong> Please first download the source code from the <a href="https://su2code.github.io/download.html">SU2 download webpage</a>.</li>
+<li><strong>Create a configuration using the <code>meson.py</code>:</strong> <code>./meson.py build -Denable-autodiff=true</code>.</li>
+<li><strong>Set environment variables:</strong> There will be an instruction showing up in the terminal window for setting environment variables after creating the configuration. Users can copy and paste the paths to the ~/.bashrc and <code>source ~/.bashrc</code>. If you miss the instruction, please follow this <a href="https://su2code.github.io/docs_v7/SU2-Linux-MacOS/">link</a> to set up the environment variables.</li>
+<li><strong>Compile and install SU2:</strong> <code>./ninja -C build install</code>.</li>
+</ol>
 </li>
 <li>
 <p><strong>Windows Users:</strong> Please install SU2 and enable SU2 python library using the steps shown <a href="https://su2code.github.io/docs_v7/SU2-Windows/">here</a>.</p>
