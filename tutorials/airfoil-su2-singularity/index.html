@@ -214,7 +214,7 @@ cd singularity &amp;&amp; \
 <li><strong>Create and Execute Python Scripts using SIF Container (recommended):</strong></li>
 </ul>
 <pre><code># Simulation
-%%writefile MIDBenchmarkSuite/airfoil2d_simu.py
+%%writefile midbench/airfoil2d_simu.py
 from midbench.envs import make
 Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
 
@@ -227,11 +227,11 @@ print(lift, drag)
 </code></pre>
 <pre><code class="language-bash"># Simulation
 %%bash
-cd MIDBenchmarkSuite/
+cd midbench/
 singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c &quot;python airfoil2d_simu.py&quot;
 </code></pre>
 <pre><code># Optimization
-%%writefile MIDBenchmarkSuite/airfoil2d_opt.py
+%%writefile midbench/airfoil2d_opt.py
 from midbench.envs import make
 Env, Design, Condition = make(&quot;Airfoil2d-v0&quot;)
 
@@ -244,7 +244,7 @@ print(drag, ld_ratio, airfoil_opt)
 </code></pre>
 <pre><code class="language-bash"># Optimization
 %%bash
-cd MIDBenchmarkSuite/
+cd midbench/
 singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c &quot;python airfoil2d_opt.py&quot;
 </code></pre>
 <ul>
