@@ -29,6 +29,7 @@ setup(
   download_url = 'https://github.com/IDEALLab/midbench/archive/refs/tags/v0.1-beta.tar.gz',
   install_requires=[
           'numpy',
+		  'scipy',
           'torch',
           'dataclasses',
           'typing_extensions',
