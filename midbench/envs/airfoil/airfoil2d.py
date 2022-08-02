@@ -110,7 +110,7 @@ class Airfoil2dEnv(midbench.core.Env):
     
     def optimize(self, conditions, designs, objectives, results_dir_opt):      
         # Config
-        os.chdir(os.path.abspath(os.path.dirname(designs.su2)))
+        os.chdir(os.path.dirname(os.path.abspath(designs.su2)))
         config = SU2.io.Config(os.path.dirname(designs.su2) + self.cfgfile_opt)
         config.NUMBER_PART = conditions.partitions
         config.NZONES      = int( conditions.nzones )

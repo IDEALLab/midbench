@@ -36,7 +36,7 @@ class Heatconduction2dEnv(midbench.core.Env):
         with open('sim_design.txt', 'w') as des:
             des.write('%s'%designs.xdmf+"\t"+'%d'%designs.resolution)
             des.close()
-        os.system('python3 ./midbench/envs/heatconduction/simulateheatconduction2d.py')
+        os.system('python3 ./midbench/envs/heatconduction/simulateHeatconduction2d.py')
 
         with open(r"./midbench/envs/heatconduction/RES_SIM/Performance.txt", 'r') as fp:
             PERF = fp.read()
@@ -47,10 +47,10 @@ class Heatconduction2dEnv(midbench.core.Env):
         volume=conditions.volume
         length=conditions.length
         resolution=conditions.resolution
-        with open('sim_var.txt', 'w') as f:
+        with open('OPT_var.txt', 'w') as f:
             f.write('%f'%volume+"\t"+'%f'%length+"\t"+'%d'%resolution)
             f.close()
-        with open('sim_design.txt', 'w') as des:
+        with open('OPT_design.txt', 'w') as des:
             des.write('%s'%designs.xdmf+"\t"+'%d'%designs.resolution)
             des.close()
         os.system('python3 ./midbench/envs/heatconduction/optimizeHeatconduction2d.py')
