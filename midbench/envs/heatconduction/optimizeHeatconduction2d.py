@@ -3,25 +3,25 @@ import time as tm
 import numpy as np
 import time as tm
 from math import floor
-with open(r"sim_var.txt", 'r') as fp:
+with open(r"OPT_var.txt", 'r') as fp:
     lines = fp.read()
     lines2=lines.split("\t")
-NN = int(lines2[2]) 
+NN = int(lines2[2])
 step = 1.0/float(NN)
 x_values = np.zeros((NN+1)) #horizontal dir (x(0))
 y_values = np.zeros((NN+1)) #vertical dir (x(1))
 x_values=np.linspace(0,1,num=NN+1)
 y_values=np.linspace(0,1,num=NN+1)
-max_run_it=1
+max_run_it=floor(NN/200)+3
 vol_f = float(lines2[0])
 width = float(lines2[1])
-os.system('rm sim_var.txt')
-with open(r"sim_design.txt", 'r') as des:
+os.system('rm OPT_var.txt')
+with open(r"OPT_design.txt", 'r') as des:
     init_g = des.read()
     init_gu=init_g.split("\t")
 init_guess=init_gu[0]
 init_guess_size=int(init_gu[1])
-os.system('rm sim_design.txt')
+os.system('rm OPT_design.txt')
 #Now set up and run optimization sets
 from fenics import *
 from fenics_adjoint import *
@@ -66,14 +66,14 @@ for run_it in range(max_run_it):
         T = Function(P, name="Temperature")
         v = TestFunction(P)
         F = inner(grad(v), k(a) * grad(T)) * dx - f * v * dx
-        solve(F == 0, T, bc, solver_parameters={"newton_solver": {"absolute_tolerance": 1.0e-7,"maximum_iterations": 20}})                                                         
+        solve(F == 0, T, bc, solver_parameters={"newton_solver": {"absolute_tolerance": 1.0e-7,"maximum_iterations": 20}})
         return T
     if __name__ == "__main__":
         if run_it==0:
             s_xmdf=init_guess
             mesh1a=UnitSquareMesh(init_guess_size, init_guess_size)
         else:
-            s_xmdf="./midbench/envs/heatconduction/RES_SIM/TEMP.xdmf"
+            s_xmdf="./midbench/envs/heatconduction/RES_OPT/TEMP.xdmf"
             mesh1a=UnitSquareMesh(NN, NN)
         #Adapted from https://fenicsproject.discourse.group/t/read-mesh-from-xdmf-file-write-checkpoint/3458/3
         #mesh1 = UnitSquareMesh(NN, NN)
@@ -85,7 +85,7 @@ for run_it in range(max_run_it):
         MM = sol
         a = interpolate(MM, A)  # initial guess.
         T = forward(a)  # solve the forward problem once.
-        controls = File("./midbench/envs/heatconduction/RES_SIM/control_iterations"+str(run_it)+".pvd")
+        controls = File("./midbench/envs/heatconduction/RES_OPT/control_iterations"+str(run_it)+".pvd")
         a_viz = Function(A, name="ControlVisualisation")
     J = assemble(f * T * dx + alpha * inner(grad(a), grad(a)) * dx)
     J_CONTROL=Control(J)
@@ -126,36 +126,36 @@ for run_it in range(max_run_it):
     mesh1 = UnitSquareMesh(NN, NN)
     V1 =  FunctionSpace(mesh1, "CG", 1)
     sol1 = a_opt
-    with XDMFFile("./midbench/envs/heatconduction/RES_SIM/TEMP.xdmf") as outfile:
+    with XDMFFile("./midbench/envs/heatconduction/RES_OPT/TEMP.xdmf") as outfile:
         outfile.write(mesh1)
         outfile.write_checkpoint(sol1, "u", 0, append=True)
 
-  
+
 
     #-------------------------------------------------------------------------------------------
-    #Discretize results
+    #Discretize RES_OPTults
 
     if run_it==max_run_it-1: #if final run reached
-        
-        #Now store the results of this run (x,y,v,w,a)
-        results = np.zeros(((NN+1)**2,5))
+
+        #Now store the RES_OPTults of this run (x,y,v,w,a)
+        RES_OPTults = np.zeros(((NN+1)**2,5))
         ind = 0
         for xs in x_values:
             for ys in y_values:
-                results[ind,0] = xs
-                results[ind,1] = ys
-                results[ind,2] = vol_f
-                results[ind,3] = width
-                results[ind,4] = a_opt(xs,ys)
+                RES_OPTults[ind,0] = xs
+                RES_OPTults[ind,1] = ys
+                RES_OPTults[ind,2] = vol_f
+                RES_OPTults[ind,3] = width
+                RES_OPTults[ind,4] = a_opt(xs,ys)
                 ind = ind+1
-        #Naming convention: hr_data_v=0.5_w=0.5_.npy, for example     
-        filename = "./midbench/envs/heatconduction/RES_SIM/SIM_hr_data_v="+str(vol_f)+"_w="+str(width)+"_.npy"
-        np.save(filename,results)  
-        xdmf_filename = XDMFFile(MPI.comm_world, "./midbench/envs/heatconduction/RES_SIM/SIM_solution_v="+str(vol_f)+"_w="+str(width)+"_.xdmf")
-        xdmf_filename.write(a_opt) 
+        #Naming convention: hr_data_v=0.5_w=0.5_.npy, for example
+        filename = "./midbench/envs/heatconduction/RES_OPT/hr_data_v="+str(vol_f)+"_w="+str(width)+"_.npy"
+        np.save(filename,RES_OPTults)
+        xdmf_filename = XDMFFile(MPI.comm_world, "./midbench/envs/heatconduction/RES_OPT/final_solution_v="+str(vol_f)+"_w="+str(width)+"_.xdmf")
+        xdmf_filename.write(a_opt)
         print("v="+ "{}".format(vol_f))
         print("w="+ "{}".format(width))
-        with open('./midbench/envs/heatconduction/RES_SIM/Performance.txt', 'w') as f:
+        with open('./midbench/envs/heatconduction/RES_OPT/Performance.txt', 'w') as f:
             f.write('%.14f'%J_CONTROL.tape_value())
             f.close()
-        os.system('rm ./midbench/envs/heatconduction/RES_SIM/TEMP*')     
+        os.system('rm ./midbench/envs/heatconduction/RES_OPT/TEMP*')     
