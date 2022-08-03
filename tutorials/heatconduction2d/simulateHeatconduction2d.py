@@ -73,7 +73,7 @@ for run_it in range(max_run_it):
             s_xmdf=init_guess
             mesh1a=UnitSquareMesh(init_guess_size, init_guess_size)
         else:
-            s_xmdf="./midbench/envs/heatconduction/RES_SIM/TEMP.xdmf"
+            s_xmdf="./tutorials/heatconduction2d/RES_SIM/TEMP.xdmf"
             mesh1a=UnitSquareMesh(NN, NN)
         #Adapted from https://fenicsproject.discourse.group/t/read-mesh-from-xdmf-file-write-checkpoint/3458/3
         #mesh1 = UnitSquareMesh(NN, NN)
@@ -85,7 +85,7 @@ for run_it in range(max_run_it):
         MM = sol
         a = interpolate(MM, A)  # initial guess.
         T = forward(a)  # solve the forward problem once.
-        controls = File("./midbench/envs/heatconduction/RES_SIM/control_iterations"+str(run_it)+".pvd")
+        controls = File("./tutorials/heatconduction2d/RES_SIM/control_iterations"+str(run_it)+".pvd")
         a_viz = Function(A, name="ControlVisualisation")
     J = assemble(f * T * dx + alpha * inner(grad(a), grad(a)) * dx)
     J_CONTROL=Control(J)
@@ -126,7 +126,7 @@ for run_it in range(max_run_it):
     mesh1 = UnitSquareMesh(NN, NN)
     V1 =  FunctionSpace(mesh1, "CG", 1)
     sol1 = a_opt
-    with XDMFFile("./midbench/envs/heatconduction/RES_SIM/TEMP.xdmf") as outfile:
+    with XDMFFile("./tutorials/heatconduction2d/RES_SIM/TEMP.xdmf") as outfile:
         outfile.write(mesh1)
         outfile.write_checkpoint(sol1, "u", 0, append=True)
 
@@ -149,13 +149,13 @@ for run_it in range(max_run_it):
                 results[ind,4] = a_opt(xs,ys)
                 ind = ind+1
         #Naming convention: hr_data_v=0.5_w=0.5_.npy, for example     
-        filename = "./midbench/envs/heatconduction/RES_SIM/SIM_hr_data_v="+str(vol_f)+"_w="+str(width)+"_.npy"
+        filename = "./tutorials/heatconduction2d/RES_SIM/SIM_hr_data_v="+str(vol_f)+"_w="+str(width)+"_.npy"
         np.save(filename,results)  
-        xdmf_filename = XDMFFile(MPI.comm_world, "./midbench/envs/heatconduction/RES_SIM/SIM_solution_v="+str(vol_f)+"_w="+str(width)+"_.xdmf")
+        xdmf_filename = XDMFFile(MPI.comm_world, "./tutorials/heatconduction2d/RES_SIM/SIM_solution_v="+str(vol_f)+"_w="+str(width)+"_.xdmf")
         xdmf_filename.write(a_opt) 
         print("v="+ "{}".format(vol_f))
         print("w="+ "{}".format(width))
-        with open('./midbench/envs/heatconduction/RES_SIM/Performance.txt', 'w') as f:
+        with open('./tutorials/heatconduction2d/RES_SIM/Performance.txt', 'w') as f:
             f.write('%.14f'%J_CONTROL.tape_value())
             f.close()
-        os.system('rm ./midbench/envs/heatconduction/RES_SIM/TEMP*')     
+        os.system('rm ./tutorials/heatconduction2d/RES_SIM/TEMP*')     
