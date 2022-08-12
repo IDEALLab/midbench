@@ -104,13 +104,13 @@ class Airfoil2dEnv(midbench.core.Env):
             elif name == 'lift':
                 cl = data['       "CL"       '][data.index[-1]]
         
-        os.chdir("../../../..")
+        os.chdir("../../..")
         
         return cd, cl
     
     def optimize(self, conditions, designs, objectives, results_dir_opt):      
         # Config
-        os.chdir(os.path.dirname(os.path.abspath(designs.su2)))
+        os.chdir(os.path.abspath(os.path.dirname(designs.su2)))
         config = SU2.io.Config(os.path.dirname(designs.su2) + self.cfgfile_opt)
         config.NUMBER_PART = conditions.partitions
         config.NZONES      = int( conditions.nzones )
