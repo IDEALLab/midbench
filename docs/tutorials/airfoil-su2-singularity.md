@@ -187,11 +187,11 @@ git clone https://github.com/IDEALLab/midbench.git
 from midbench.envs import make
 Env, Design, Condition = make("Airfoil2d-v0")
 
-designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy').meshgen()
+designs = Design(air_coord_path = './tutorials/airfoil2d/airfoils_pred_cbegan_example.npy').meshgen()
 conditions = Condition(**{'mach':0.7,'reynolds':7000000,'lift':0.350})
 performances = ['lift', 'drag']
 
-lift, drag = Env.simulate(conditions, designs, performances, './midbench/envs/airfoil/results_simu')
+lift, drag = Env.simulate(conditions, designs, performances, './tutorials/airfoil2d/results_simu')
 print(lift, drag)
 ```
 
@@ -208,11 +208,11 @@ singularity exec --userns ../su2v7.3.1_conda3.9.12_gmsh_latest.sif bash -c "pyth
 from midbench.envs import make
 Env, Design, Condition = make("Airfoil2d-v0")
 
-designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy')
+designs = Design(su2='./tutorials/airfoil2d/mesh_NACA0012_inv.su2')
 conditions = Condition(**{'mach':0.6,'reynolds':8000000,'lift':0.320})
 objectives = ['drag', 'ld_ratio', 'airfoil_opt']
 
-drag, ld_ratio, airfoil_opt = Env.optimize(conditions, designs, objectives, './midbench/envs/airfoil/results_opt')
+drag, ld_ratio, airfoil_opt = Env.optimize(conditions, designs, objectives, './results_opt')
 print(drag, ld_ratio, airfoil_opt)
 ```
 
@@ -236,7 +236,7 @@ from midbench.envs import make
 Env, Design, Condition = make("Airfoil2d-v0")
 
 # Simulation
-designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy').meshgen()
+designs = Design(air_coord_path = './tutorials/airfoil2d/airfoils_pred_cbegan_example.npy').meshgen()
 conditions = Condition(**{'mach':0.7,'reynolds':7000000,'lift':0.350})
 performances = ['lift', 'drag']
 
