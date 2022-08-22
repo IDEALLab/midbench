@@ -240,14 +240,14 @@ designs = Design(air_coord_path = './tutorials/airfoil2d/airfoils_pred_cbegan_ex
 conditions = Condition(**{'mach':0.7,'reynolds':7000000,'lift':0.350})
 performances = ['lift', 'drag']
 
-lift, drag = Env.simulate(conditions, designs, performances, './midbench/envs/airfoil/results_simu')
+lift, drag = Env.simulate(conditions, designs, performances, './tutorials/airfoil2d/results_simu')
 
 # Optimization
-designs = Design('./midbench/envs/airfoil/airfoils_pred_cbegan_example.npy')
+designs = Design(su2='./tutorials/airfoil2d/mesh_NACA0012_inv.su2')
 conditions = Condition(**{'mach':0.6,'reynolds':8000000,'lift':0.320})
 objectives = ['drag', 'ld_ratio', 'airfoil_opt']
 
-drag, ld_ratio, airfoil_opt = Env.optimize(conditions, designs, objectives, './midbench/envs/airfoil/results_opt')
+drag, ld_ratio, airfoil_opt = Env.optimize(conditions, designs, objectives, './results_opt')
 print(drag, ld_ratio, airfoil_opt)
 ```
 
